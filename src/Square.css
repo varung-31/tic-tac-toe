@@ -1,0 +1,20 @@
+.square {
+    height: 50px;
+    width: 50px;
+    background: white;
+
+    /* Avoid overlapping borders */
+    margin-right: -2px;
+    margin-bottom: -2px;
+
+    font-size: 30px;
+    border-color: black;
+    border-style: solid;
+    vertical-align: top;
+    border-width: 2px;
+    font-weight: bold;
+}
+
+.square:focus {
+    outline: none;
+}

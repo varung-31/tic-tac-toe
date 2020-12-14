@@ -1,6 +1,7 @@
 interface SquareProps {
     text: string,
-    onClick: (event: React.MouseEvent) => void
+    onClick: (event: React.MouseEvent) => void,
+    color: string
 }
 
 interface BoardState {
