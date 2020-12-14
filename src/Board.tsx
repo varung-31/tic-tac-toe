@@ -12,8 +12,8 @@ class Board extends React.Component<any, BoardState> {
     }
 
     handleClick(index: number) {
-        // do not mark a symbol on an already marked square
-        if (this.state.board[index] !== null) {
+        // do not mark a symbol on an already marked square or if the game is already finished
+        if (this.state.board[index] !== null || this.determineWinner() !== null) {
             return;
         }
 
@@ -38,6 +38,45 @@ class Board extends React.Component<any, BoardState> {
         return <Square key={index} text={this.state.board[index]} onClick={() => this.handleClick(index)} color={color} />
     }
 
+    determineWinner() {
+        const winConfigurations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        for (const confIndex in winConfigurations) {
+            const conf = winConfigurations[confIndex];
+            if (this.state.board[conf[0]] === this.state.board[conf[1]] &&
+                this.state.board[conf[1]] === this.state.board[conf[2]] && this.state.board[conf[2]] !== null) {
+                return this.state.isXNext ? 'O' : 'X';
+            }
+        }
+
+        return null;
+    }
+
+    determineGameStatus(nextPlayer: string) {
+        // check for the drawn state
+        if (this.state.board.filter(x => x === null).length === 0) {
+            return <>The game is drawn!</>;
+        }
+
+        const winner = this.determineWinner();
+
+        // we have a winner
+        if (winner !== null) {
+            return <>Winner : <span style={{color: this.computeColor(winner)}}>{winner}</span></>;
+        }
+
+        return <>Next Player : <span style={{color: this.computeColor(nextPlayer)}}>{nextPlayer}</span></>;
+    }
+
     render() {
         const nextPlayer = this.state.isXNext ? 'X' : 'O';
         let buttonLayout = new Array(3);
@@ -54,9 +93,7 @@ class Board extends React.Component<any, BoardState> {
                 <h1>Welcome to Tic Tac Toe !!!</h1>
                 <div className="game-board">{buttonLayout}</div>
                 <div className="game-info">
-                    <h2>
-                        Next Player : <span style={{color: this.computeColor(nextPlayer)}}>{nextPlayer}</span>
-                    </h2>
+                    <h2>{this.determineGameStatus(nextPlayer)}</h2>
                 </div>
             </div>
         );
