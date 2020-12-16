@@ -2,25 +2,3 @@
     display: block;
     font-size: 0;   /* To remove unwanted space between buttons */
 }
-
-.game-board {
-    float: left;
-    width: 200px;
-}
-
-.game-info {
-    float: left;
-}
-
-h1 {
-    margin-bottom: 50px;
-    color: darkred;
-}
-
-h2 {
-    margin-top: 0;
-}
-
-.game {
-    margin-left: 20px;
-}

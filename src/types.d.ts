@@ -4,7 +4,13 @@ interface SquareProps {
     color: string
 }
 
-interface BoardState {
+interface BoardProps {
     board: Char[],
-    isXNext: boolean
+    onClick: (index: number) => void
+}
+
+interface GameState {
+    history: Char[][],
+    isXNext: boolean,
+    stepNumber: number
 }
