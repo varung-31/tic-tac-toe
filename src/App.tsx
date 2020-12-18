@@ -69,14 +69,26 @@ class App extends React.Component<any , GameState> {
         modifiedBoard[index] = this.state.isXNext ? 'X' : 'O';
 
         // append the new board to the history
-        let modifiedHistory = this.state.history.concat([modifiedBoard]);
+        let modifiedHistory = this.state.history.slice(0, this.state.stepNumber + 1).concat([modifiedBoard]);
 
         // don't forget to flip the turns and increment the step number
         this.setState({history: modifiedHistory, isXNext: !this.state.isXNext, stepNumber: this.state.stepNumber + 1});
     }
 
+    jumpToStep(index: number) {
+        this.setState({stepNumber: index, isXNext: index % 2 === 0})
+    }
+
     render() {
         const nextPlayer = this.state.isXNext ? 'X' : 'O';
+        const pastMoves = this.state.history.map(((value, index) => {
+            const message = index === 0 ? 'Go to game start' : 'Go to move #' + index;
+            return (
+                <li>
+                    <button onClick={() => this.jumpToStep(index)}>{message}</button>
+                </li>
+            );
+        }));
         return (
             <div className="game">
                 <h1>Welcome to Tic Tac Toe !!!</h1>
@@ -85,6 +97,7 @@ class App extends React.Component<any , GameState> {
                 </div>
                 <div className="game-info">
                     <h2>{this.determineGameStatus(nextPlayer)}</h2>
+                    <ol>{pastMoves}</ol>
                 </div>
             </div>
         );
