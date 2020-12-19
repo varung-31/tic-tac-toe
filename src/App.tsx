@@ -41,18 +41,16 @@ class App extends React.Component<any , GameState> {
     }
 
     determineGameStatus(nextPlayer: string) {
-        console.log(this.state.stepNumber);
-        console.log(this.state.history);
-        // check for the drawn state
-        if (this.state.history[this.state.stepNumber].filter(x => x === null).length === 0) {
-            return <>The game is drawn!</>;
-        }
-
         const winner = this.determineWinner();
 
         // we have a winner
         if (winner !== null) {
             return <>Winner : <span style={{color: this.computeColor(winner)}}>{winner}</span></>;
+        }
+
+        // check for the drawn state
+        if (this.state.history[this.state.stepNumber].filter(x => x === null).length === 0) {
+            return <>The game is drawn!</>;
         }
 
         return <>Next Player : <span style={{color: this.computeColor(nextPlayer)}}>{nextPlayer}</span></>;
