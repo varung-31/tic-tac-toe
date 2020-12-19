@@ -83,7 +83,10 @@ class App extends React.Component<any , GameState> {
             const message = index === 0 ? 'Go to game start' : 'Go to move #' + index;
             return (
                 <li key={index}>
-                    <button onClick={() => this.jumpToStep(index)}>{message}</button>
+                    <button onClick={() => this.jumpToStep(index)}
+                            style={{fontWeight: this.state.stepNumber === index ? "bold" : "normal"}}>
+                        {message}
+                    </button>
                 </li>
             );
         }));
