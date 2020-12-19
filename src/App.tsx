@@ -82,7 +82,7 @@ class App extends React.Component<any , GameState> {
         const pastMoves = this.state.history.map(((value, index) => {
             const message = index === 0 ? 'Go to game start' : 'Go to move #' + index;
             return (
-                <li>
+                <li key={index}>
                     <button onClick={() => this.jumpToStep(index)}>{message}</button>
                 </li>
             );
