@@ -8,7 +8,8 @@ class App extends React.Component<any , GameState> {
         this.state = {
             history: [new Array(9).fill(null)],
             isXNext: true,
-            stepNumber: 0
+            stepNumber: 0,
+            winConfiguration: new Array(3).fill(null)
         };
     }
 
@@ -33,6 +34,10 @@ class App extends React.Component<any , GameState> {
             const conf = winConfigurations[confIndex];
             if (currentBoard[conf[0]] === currentBoard[conf[1]] && currentBoard[conf[1]] === currentBoard[conf[2]] &&
                 currentBoard[conf[2]] !== null) {
+                // save the win configuration and return the winner
+                if (this.state.winConfiguration.filter(element => element !== null).length === 0) {
+                    this.setState({winConfiguration: conf});
+                }
                 return this.state.isXNext ? 'O' : 'X';
             }
         }
@@ -74,7 +79,7 @@ class App extends React.Component<any , GameState> {
     }
 
     jumpToStep(index: number) {
-        this.setState({stepNumber: index, isXNext: index % 2 === 0})
+        this.setState({stepNumber: index, isXNext: index % 2 === 0, winConfiguration: new Array(3).fill(null)})
     }
 
     render() {
@@ -94,7 +99,9 @@ class App extends React.Component<any , GameState> {
             <div className="game">
                 <h1>Welcome to Tic Tac Toe !!!</h1>
                 <div className="game-board">
-                    <Board board={this.state.history[this.state.stepNumber]} onClick={(index) => this.handleClick(index)} />
+                    <Board board={this.state.history[this.state.stepNumber]}
+                           onClick={(index) => this.handleClick(index)}
+                           winConf={this.state.winConfiguration} />
                 </div>
                 <div className="game-info">
                     <h2>{this.determineGameStatus(nextPlayer)}</h2>

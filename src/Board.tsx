@@ -10,10 +10,12 @@ class Board extends React.Component<BoardProps, any> {
     renderSquare(index: number) {
         // display X in green and O in blue colors
         const color = this.computeColor(this.props.board[index]);
+        const backgroundColor = this.props.winConf.includes(index) ? "lightsalmon" : "white";
 
         // added key to allow React to uniquely identify every element in the list
         // onClick custom function has to be an arrow function or it will be invoked on every execution of renderSquare
-        return <Square key={index} text={this.props.board[index]} onClick={() => this.props.onClick(index)} color={color} />
+        return <Square key={index} text={this.props.board[index]} onClick={() => this.props.onClick(index)}
+                       color={color} backgroundColor={backgroundColor} />
     }
 
     render() {
